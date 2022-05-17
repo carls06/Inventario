@@ -1,0 +1,156 @@
+<div class="col-12 col-sm-6 col-md-3">
+  <div class="info-box mb-3">
+    <span class="info-box-icon bg-success elevation-1"><i class="fas fa-shopping-cart"></i></span>
+
+    <div class="info-box-content">
+      <span class="info-box-text">Productos</span>
+      <span class="info-box-number">{{productos.length}}</span>
+    </div>
+    <!-- /.info-box-content -->
+  </div>
+  <!-- /.info-box -->
+</div>
+
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Lista de Productos</h4>
+        <h6 class="card-subtitle"></h6>
+        <div class="table-responsive">
+          <div class="d-flex justify-content-end">
+            <button type="button" class="btn btn-info btn-rounded " data-toggle="modal"
+              data-target="#add-contact">Agregar Nuevo Producto</button>
+          </div>
+          <div id="add-contact" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="myModalLabel">Agregar Nuevo Producto</h4>
+                </div>
+
+                <div class="modal-body">
+                  <form class="form-horizontal form-material" (ngSubmit)="agregarProducto()" [formGroup]="form">
+                    <div class="form-group">
+                      <div class="col-md-12 m-b-20">
+                        <input type="text" class="form-control" placeholder="Nombre de producto"
+                          formControlName="nombreProducto">
+                      </div>
+                      <!-- <small *ngIf="nombreProducto.invalid && nombreProducto.touched" class="form-text text-danger">*Nombre de producto requerido</small>       -->
+                    </div>
+                    <div class="form-group">
+                      <div class="col-md-12 m-b-20">
+                        <input type="text" class="form-control" placeholder="Codigo de Producto"
+                          formControlName="CodProd">
+                      </div>
+                      <!-- <small *ngIf="CodProd.invalid && CodProd.touched" class="form-text text-danger">*Codigo de producto requerido</small>       -->
+                    </div>
+                    <div class="form-group">
+                      <div class="col-md-12 m-b-20">
+                        <input type="text" class="form-control" placeholder="Categoria" formControlName="Categoria">
+                      </div>
+                      <!-- <small *ngIf="Categoria.invalid && Categoria.touched" class="form-text text-danger">*Codigo de producto requerido</small>       -->
+                    </div>
+                    <div class="form-group">
+                      <div class="col-md-12 m-b-20">
+                        <input type="text" class="form-control" placeholder="Presio de Producto"
+                          formControlName="Precio">
+                      </div>
+                      <!-- <small *ngIf="Precio.invalid && Precio.touched" class="form-text text-danger">*Codigo de producto requerido</small>       -->
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" formControlName="iva">
+                      <label class="form-check-label">IVA -13%</label>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="submit" class="btn btn-info waves-effect">Guardar</button>
+                      <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Cancel</button>
+                    </div>
+                  </form>
+                </div>
+
+              </div>
+              <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+          </div>
+          <table id="demo-foo-addrow" class="table m-t-30 table-hover contact-list footable-loaded footable"
+            data-page-size="10">
+            <thead>
+              <tr>
+                <!-- *ngFor="let invent of inventario; let i=index"-->
+              <tr>
+                <th class="footable-sortable">No<span class="footable-sort-indicator"></span></th>
+                <th class="footable-sortable">Nombre de Producto<span class="footable-sort-indicator"></span></th>
+                <th class="footable-sortable">Categoria<span class="footable-sort-indicator"></span></th>
+                <th class="footable-sortable">Precio<span class="footable-sort-indicator"></span></th>
+                <th class="footable-sortable">cantidad<span class="footable-sort-indicator"></span></th>
+                <th class="footable-sortable">Action<span class="footable-sort-indicator"></span></th>
+
+              </tr>
+
+
+              <!--<h1  *ngif="productos.length === 0"> No Tiene Productos Registrados </h1>-->
+
+
+            </thead>
+
+            <tbody>
+
+              <tr *ngFor="let item of productos ; let i=index">
+
+                <td>{{i+1}}</td>
+                <td>{{item.nombreProducto}}</td>
+
+                <td>herramienta</td>
+                <td>15.5</td>
+                <td>123</td>
+                <td>
+                  <button type="button" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn"
+                    data-toggle="tooltip" data-original-title="update" data-toggle="modal" data-target="#add-contact"><i
+                      class="fas fa-edit"></i></button>
+                  <button type="button" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn"
+                    data-toggle="tooltip" data-original-title="Delete"><i class="fas fa-trash"
+                      aria-hidden="true"></i></button>
+                </td>
+              </tr>
+            </tbody>
+            <tfoot>
+
+
+
+
+              <tr>
+                <td colspan="2">
+
+                </td>
+
+                <!-- <td colspan="7">
+                  <div class="text-right">
+                    <ul class="pagination">
+                      <li class="footable-page-arrow disabled"><a data-page="first" href="#first">«</a></li>
+                      <li class="footable-page-arrow disabled"><a data-page="prev" href="#prev">‹</a></li>
+                      <li class="footable-page active"><a data-page="0" href="#">1</a></li>
+                      <li class="footable-page"><a data-page="1" href="#">2</a></li>
+                      <li class="footable-page-arrow"><a data-page="next" href="#next">›</a></li>
+                      <li class="footable-page-arrow"><a data-page="last" href="#last">»</a></li>
+                    </ul>
+                  </div>
+                </td> -->
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+    </div>
+    <!-- Column -->
+
+    <!-- Column -->
+
+    <!-- Column -->
+
+    <!-- Column -->
+
+  </div>
+</div>
