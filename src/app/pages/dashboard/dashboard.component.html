@@ -16,18 +16,17 @@
     <div class="card">
       <div class="card-body">
         <h4 class="card-title">Lista de Productos</h4>
-        <h6 class="card-subtitle"></h6>
-        <div class="table-responsive">
-          <div class="d-flex justify-content-end">
-            <button type="button" class="btn btn-info btn-rounded " data-toggle="modal"
-              data-target="#add-contact">Agregar Nuevo Producto</button>
-          </div>
+        <div class="d-flex justify-content-end">
+          <button type="button" class="btn btn-info btn-rounded " data-toggle="modal" data-target="#add-contact">
+            Agregar Nuevo Producto</button>
+        </div>
+        <div class="table-responsive" style="height: 325px;">
           <div id="add-contact" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
             aria-hidden="true">
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h4 class="modal-title" id="myModalLabel">Agregar Nuevo Producto</h4>
+                  <h4 class="modal-title" id="myModalLabel"> Producto</h4>
                 </div>
 
                 <div class="modal-body">
@@ -48,14 +47,27 @@
                     </div>
                     <div class="form-group">
                       <div class="col-md-12 m-b-20">
-                        <input type="text" class="form-control" placeholder="Categoria" formControlName="Categoria">
+                        <select class="form-control select2 select2-hidden-accessible" style="width: 100%;"
+                          formControlName="Categoria" data-select2-id="1" tabindex="-1" aria-hidden="true">
+                          <option value="">Selecciona una Categoria</option>
+                          <option *ngFor="let item of categoria;" [ngValue]="item.catName" data-select2-id="36">
+                            {{item.catName}}</option>
+
+                        </select>
                       </div>
                       <!-- <small *ngIf="Categoria.invalid && Categoria.touched" class="form-text text-danger">*Codigo de producto requerido</small>       -->
                     </div>
                     <div class="form-group">
                       <div class="col-md-12 m-b-20">
-                        <input type="text" class="form-control" placeholder="Presio de Producto"
+                        <input type="text" class="form-control" placeholder="Precio de Producto"
                           formControlName="Precio">
+                      </div>
+                      <!-- <small *ngIf="Precio.invalid && Precio.touched" class="form-text text-danger">*Codigo de producto requerido</small>       -->
+                    </div>
+                    <div class="form-group">
+                      <div class="col-md-12 m-b-20">
+                        <input type="text" class="form-control" placeholder="Cantidad de producto"
+                          formControlName="Cantidad">
                       </div>
                       <!-- <small *ngIf="Precio.invalid && Precio.touched" class="form-text text-danger">*Codigo de producto requerido</small>       -->
                     </div>
@@ -85,8 +97,8 @@
                 <th class="footable-sortable">Nombre de Producto<span class="footable-sort-indicator"></span></th>
                 <th class="footable-sortable">Categoria<span class="footable-sort-indicator"></span></th>
                 <th class="footable-sortable">Precio<span class="footable-sort-indicator"></span></th>
-                <th class="footable-sortable">cantidad<span class="footable-sort-indicator"></span></th>
-                <th class="footable-sortable">Action<span class="footable-sort-indicator"></span></th>
+                <th class="footable-sortable">Cantidad<span class="footable-sort-indicator"></span></th>
+                <th class="footable-sortable">Acción<span class="footable-sort-indicator"></span></th>
 
               </tr>
 
@@ -98,21 +110,19 @@
 
             <tbody>
 
-              <tr *ngFor="let item of productos ; let i=index">
+              <tr *ngFor="let pro of productos ; let i=index">
 
                 <td>{{i+1}}</td>
-                <td>{{item.nombreProducto}}</td>
+                <td>{{pro.nombreProducto}}</td>
 
-                <td>herramienta</td>
-                <td>15.5</td>
-                <td>123</td>
+                <td>{{pro.Categoria}}</td>
+                <td>{{pro.Precio}}</td>
+                <td>{{pro.Cantidad}}</td>
                 <td>
-                  <button type="button" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn"
+                  <!-- <button (click)="actualizarPro(pro.id)" type="button" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn"
                     data-toggle="tooltip" data-original-title="update" data-toggle="modal" data-target="#add-contact"><i
-                      class="fas fa-edit"></i></button>
-                  <button type="button" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn"
-                    data-toggle="tooltip" data-original-title="Delete"><i class="fas fa-trash"
-                      aria-hidden="true"></i></button>
+                      class="fas fa-edit"></i></button> -->
+                  <i class="fas fa-trash" (click)="borrarpro(pro.id)" aria-hidden="true"></i>
                 </td>
               </tr>
             </tbody>

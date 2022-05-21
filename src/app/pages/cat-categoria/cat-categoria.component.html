@@ -1,0 +1,49 @@
+<div class="card">
+    <div class="card-body row">
+        <div class="col-4">
+            <div class="form-group">
+                <form class="form-horizontal form-material" (ngSubmit)="agregarCat()" [formGroup]="form">
+
+                    <label for="inputName">Categoria</label>
+                    <input type="text" formControlName="catName" class="form-control">
+
+
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-primary" value="Guardar Categoria">
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="col-8 text-center d-flex align-items-center justify-content-center">
+            <div class="card">
+
+                <!-- /.card-header -->
+                <div class="card-body table-responsive p-0" style="height: 300px; width: 500px;">
+                    <table class="table table-head-fixed text-nowrap">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Categoría</th>
+                                <th>Acción</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of categoria; let i = index;">
+                                <td>{{i+1}}</td>
+                                <td>{{item.catName}}</td>
+                                <td>
+                                    <i class="fas fa-trash"
+                                            aria-hidden="true" (click)="borrarCat(item.id)"></i>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.card-body -->
+            </div>
+        </div>
+
+    </div>
+</div>

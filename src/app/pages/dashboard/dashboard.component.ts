@@ -6,7 +6,10 @@ import { ProductoModel } from 'src/app/models/producto.model';
 import { InventarioService } from 'src/app/services/inventario.service';
 import Swal from 'sweetalert2'
 import { FormBuilder } from '@angular/forms';
-import {map} from 'rxjs/operators';
+import { map } from 'rxjs/operators';
+import { Title } from '@angular/platform-browser';
+import { CatalogosService } from 'src/app/services/catalogos.service';
+import { SubSink } from 'subsink';
 
 
 
@@ -17,23 +20,26 @@ import {map} from 'rxjs/operators';
 })
 export class DashboardComponent implements OnInit {
 
-  producto = new ProductoModel();
+  private subs = new SubSink();
   productos: any[] = [];
   flag = false;
-
-
+  categoria: any[] = [];
 
   form: FormGroup = this.fb.group({
     nombreProducto: ['', Validators.required],
     CodProd: ['', Validators.required],
     Categoria: ['', Validators.required],
     Precio: ['', Validators.required],
+    Cantidad: ['', Validators.required],
     iva: [false]
   });
   // inventario: InventarioModel[] =[];
 
   constructor(private InventS_: InventarioService,
-    private fb: FormBuilder) {
+    private fb: FormBuilder,
+    private titulo: Title,
+    private _catalogoService: CatalogosService) {
+    this.titulo.setTitle('Dashboard');
 
 
   }
@@ -43,23 +49,79 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
     this.flag = true;
     this.recargarTabla();
+    this.subs.add(
+      this._catalogoService.getAll().snapshotChanges().pipe(
+        map((resp: any) => resp.map((res: any) => ({
+          id: res.payload.key, ...res.payload.val()
+        })
+
+        ))
+      ).subscribe(data => {
+        this.categoria = data;
+      }));
+
+  }
+  ngOnDestroy() {
+    this.subs.unsubscribe();
+  }
+  borrarpro(id:any){
+
+    Swal.fire({
+      title: '¿Estas seguro que deseas eliminar?',
+      text: "No podras deshacer la seleccion!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Eliminar!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.InventS_.delete(id).then(()=>{
+
+          Swal.fire(
+            'Eliminado!',
+            'Producto Eliminado.',
+            'success'
+          )
+        })
+        
+      }
+    })
   }
 
   recargarTabla() {
 
-    this.InventS_.getAll().snapshotChanges().pipe(
-      map((resp:any)=>resp.map((res:any)=>({
-        id: res.payload.key, ...res.payload.val()
-      })
+    this.subs.add(
+      this.InventS_.getAll().snapshotChanges().pipe(
+        map((resp: any) => resp.map((res: any) => ({
+          id: res.payload.key, ...res.payload.val()
+        })
 
-      ))
-    ).subscribe(data=>{
-      console.log(data);
-      this.productos=data;
-      
-    })
+        ))
+      ).subscribe(data => {
+        this.productos = data;
+
+      }));
   }
 
+  actualizarPro(id:any){
+   let prod= this.form.setValue({
+      nombreProducto: this.form.value.nombreProducto,
+    CodProd:this.form.value.CodProd,
+    Categoria: this.form.value.Precio,
+    Precio: this.form.value.nombreProducto,
+    Cantidad:this.form.value.Cantidad,
+    iva: this.form.value.iva
+    })
+
+    this.InventS_.updateProdu(id,prod).then(()=>{
+      Swal.fire({
+        title: this.form.value.nombreProducto,
+        text: 'Se actualizo conrrectamente',
+        icon: 'success'
+      });
+    })
+  }
 
   agregarProducto() {
     if (this.form.invalid) {
@@ -93,7 +155,7 @@ export class DashboardComponent implements OnInit {
 
   }
 
-  get valid(){
+  get valid() {
 
     return this.form.dirty;
   }

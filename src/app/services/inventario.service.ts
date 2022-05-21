@@ -29,5 +29,11 @@ export class InventarioService {
     return this.productList.push(producto);
   }
 
+  delete(id:any){
+    return this.productList.remove(id);
+  }
+  updateProdu(id:string,producto:any){
+    return this.productList.update(id,producto);
+  }
 }
 

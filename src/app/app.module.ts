@@ -16,6 +16,7 @@ import { FooterComponent } from './shared/footer/footer.component';
 import { AngularFireDatabase, AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireModule } from '@angular/fire';
 import { environment } from 'src/environments/environment';
+import { CatCategoriaComponent } from './pages/cat-categoria/cat-categoria.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { environment } from 'src/environments/environment';
     HeaderComponent,
     SidebarComponent,
     FooterComponent,
+    CatCategoriaComponent,
 
   ],
   imports: [
@@ -39,6 +41,7 @@ import { environment } from 'src/environments/environment';
     ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireDatabaseModule,
+
 
    
    
