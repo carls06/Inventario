@@ -11,13 +11,13 @@ const routes: Routes = [
  {path: 'salida',data:{breadcrumb: 'Salida'},component: SalidaComponent},
  {path: 'categoria',data:{breadcrumb: 'Categoria'},component: CatCategoriaComponent},
 
- {path: '', redirectTo:'/dashboard', pathMatch: 'full'},
+ {path: '', redirectTo:'dashboard', pathMatch: 'full'},
  //{path: '**', component: }
 
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, {useHash:true})],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

@@ -40,11 +40,7 @@ import { CatCategoriaComponent } from './pages/cat-categoria/cat-categoria.compo
     HttpClientModule,
     ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
-    AngularFireDatabaseModule,
 
-
-   
-   
   ],
   providers: [HttpClient],
   bootstrap: [AppComponent]
