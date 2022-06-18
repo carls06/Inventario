@@ -22,8 +22,15 @@ export class DashboardComponent implements OnInit {
 
   private subs = new SubSink();
   productos: any[] = [];
-  flag = false;
   categoria: any[] = [];
+
+  selected?: any;
+
+  flag = false;
+  btn_edit: boolean = false;
+
+
+
 
   form: FormGroup = this.fb.group({
     nombreProducto: ['', Validators.required],
@@ -39,7 +46,7 @@ export class DashboardComponent implements OnInit {
     private fb: FormBuilder,
     private titulo: Title,
     private _catalogoService: CatalogosService) {
-    this.titulo.setTitle('Dashboard');
+    this.titulo.setTitle('Tablero');
 
 
   }
@@ -64,7 +71,7 @@ export class DashboardComponent implements OnInit {
   ngOnDestroy() {
     this.subs.unsubscribe();
   }
-  borrarpro(id:any){
+  borrarpro(id: any) {
 
     Swal.fire({
       title: '¿Estas seguro que deseas eliminar?',
@@ -76,7 +83,7 @@ export class DashboardComponent implements OnInit {
       confirmButtonText: 'Eliminar!'
     }).then((result) => {
       if (result.isConfirmed) {
-        this.InventS_.delete(id).then(()=>{
+        this.InventS_.delete(id).then(() => {
 
           Swal.fire(
             'Eliminado!',
@@ -84,9 +91,14 @@ export class DashboardComponent implements OnInit {
             'success'
           )
         })
-        
+
       }
     })
+  }
+
+  addProducto() {
+    this.btn_edit = false;
+    this.form.reset();
   }
 
   recargarTabla() {
@@ -104,17 +116,23 @@ export class DashboardComponent implements OnInit {
       }));
   }
 
-  actualizarPro(id:any){
-   let prod= this.form.setValue({
-      nombreProducto: this.form.value.nombreProducto,
-    CodProd:this.form.value.CodProd,
-    Categoria: this.form.value.Precio,
-    Precio: this.form.value.nombreProducto,
-    Cantidad:this.form.value.Cantidad,
-    iva: this.form.value.iva
-    })
+  editProd(item: any) {
+    this.btn_edit = true;
+    this.selected = item;
+    console.log(this.selected);
 
-    this.InventS_.updateProdu(id,prod).then(()=>{
+    this.form.patchValue({
+      nombreProducto: item?.nombreProducto,
+      CodProd: item?.CodProd,
+      Categoria: item.categoria,
+      Precio: item?.Precio,
+      Cantidad: item?.Cantidad,
+      iva: item?.iva
+    })
+  }
+
+  actualizarProd() {
+    this.InventS_.updateProdu(this.selected.id, this.form.value).then(() => {
       Swal.fire({
         title: this.form.value.nombreProducto,
         text: 'Se actualizo conrrectamente',
@@ -143,7 +161,7 @@ export class DashboardComponent implements OnInit {
 
         Swal.fire({
           title: this.form.value.nombreProducto,
-          text: 'Se guardo conrrectamente',
+          text: 'Se guardo correctamente',
           icon: 'success'
         });
 

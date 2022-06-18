@@ -17,7 +17,7 @@
       <div class="card-body">
         <h4 class="card-title">Lista de Productos</h4>
         <div class="d-flex justify-content-end">
-          <button type="button" class="btn btn-info btn-rounded " data-toggle="modal" data-target="#add-contact">
+          <button type="button" class="btn btn-info btn-rounded" (click)="addProducto()" data-toggle="modal" data-target="#add-contact">
             Agregar Nuevo Producto</button>
         </div>
         <div class="table-responsive" style="height: 325px;">
@@ -30,7 +30,7 @@
                 </div>
 
                 <div class="modal-body">
-                  <form class="form-horizontal form-material" (ngSubmit)="agregarProducto()" [formGroup]="form">
+                  <form class="form-horizontal form-material"  [formGroup]="form">
                     <div class="form-group">
                       <div class="col-md-12 m-b-20">
                         <input type="text" class="form-control" placeholder="Nombre de producto"
@@ -50,23 +50,24 @@
                         <select class="form-control select2 select2-hidden-accessible" style="width: 100%;"
                           formControlName="Categoria" data-select2-id="1" tabindex="-1" aria-hidden="true">
                           <option value="">Selecciona una Categoria</option>
-                          <option *ngFor="let item of categoria;" [ngValue]="item.catName" data-select2-id="36">
+                          <option *ngFor="let item of categoria;" [ngValue]="item.catName" >
                             {{item.catName}}</option>
 
                         </select>
+
                       </div>
                       <!-- <small *ngIf="Categoria.invalid && Categoria.touched" class="form-text text-danger">*Codigo de producto requerido</small>       -->
                     </div>
                     <div class="form-group">
                       <div class="col-md-12 m-b-20">
-                        <input type="text" class="form-control" placeholder="Precio de Producto"
+                        <input type="number" class="form-control" placeholder="Precio de Producto"
                           formControlName="Precio">
                       </div>
                       <!-- <small *ngIf="Precio.invalid && Precio.touched" class="form-text text-danger">*Codigo de producto requerido</small>       -->
                     </div>
                     <div class="form-group">
                       <div class="col-md-12 m-b-20">
-                        <input type="text" class="form-control" placeholder="Cantidad de producto"
+                        <input type="number" class="form-control" placeholder="Cantidad de producto"
                           formControlName="Cantidad">
                       </div>
                       <!-- <small *ngIf="Precio.invalid && Precio.touched" class="form-text text-danger">*Codigo de producto requerido</small>       -->
@@ -76,9 +77,11 @@
                       <label class="form-check-label">IVA -13%</label>
                     </div>
                     <div class="modal-footer">
-                      <button type="submit" class="btn btn-info waves-effect">Guardar</button>
-                      <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Cancel</button>
+                      <button [disabled]="!form.valid" *ngIf="!btn_edit" (click)="agregarProducto()" class="btn btn-info waves-effect mr-1">Guardar</button>
+                  <button [disabled]="!form.valid" *ngIf="btn_edit" (click)="actualizarProd()" class="btn btn-info waves-effect mr-1">Guardar</button>
+                  <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Cancel</button>
                     </div>
+
                   </form>
                 </div>
 
@@ -116,13 +119,13 @@
                 <td>{{pro.nombreProducto}}</td>
 
                 <td>{{pro.Categoria}}</td>
-                <td>{{pro.Precio}}</td>
+                <td>{{pro.Precio}} $</td>
                 <td>{{pro.Cantidad}}</td>
                 <td>
-                  <!-- <button (click)="actualizarPro(pro.id)" type="button" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn"
-                    data-toggle="tooltip" data-original-title="update" data-toggle="modal" data-target="#add-contact"><i
-                      class="fas fa-edit"></i></button> -->
-                  <i class="fas fa-trash" (click)="borrarpro(pro.id)" aria-hidden="true"></i>
+                
+                  <i class="fas fa-trash mr-1" (click)="borrarpro(pro.id)" aria-hidden="true"></i>
+                  <i class="fas fa-edit" (click)="editProd(pro)" aria-hidden="true" data-toggle="modal" data-target="#add-contact"></i>
+                 
                 </td>
               </tr>
             </tbody>
@@ -155,7 +158,6 @@
       </div>
     </div>
     <!-- Column -->
-
     <!-- Column -->
 
     <!-- Column -->

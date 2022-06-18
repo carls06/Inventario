@@ -22,7 +22,7 @@ export class CatCategoriaComponent implements OnInit {
   }
 
   form: FormGroup = this.fb.group({
-    catName: ['', Validators.required]
+    catName: ['', Validators.required],
   })
   ngOnInit(): void {
     this.recargarTabla();

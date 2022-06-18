@@ -13,7 +13,6 @@ import { BreadcrumbsComponent } from './shared/breadcrumbs/breadcrumbs.component
 import { HeaderComponent } from './shared/header/header.component';
 import { SidebarComponent } from './shared/sidebar/sidebar.component';
 import { FooterComponent } from './shared/footer/footer.component';
-import { AngularFireDatabase, AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireModule } from '@angular/fire';
 import { environment } from 'src/environments/environment';
 import { CatCategoriaComponent } from './pages/cat-categoria/cat-categoria.component';
@@ -40,7 +39,6 @@ import { CatCategoriaComponent } from './pages/cat-categoria/cat-categoria.compo
     HttpClientModule,
     ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
-
   ],
   providers: [HttpClient],
   bootstrap: [AppComponent]
